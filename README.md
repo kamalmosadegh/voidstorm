@@ -4,7 +4,7 @@
 ![Canvas](https://img.shields.io/badge/render-Canvas%202D-red)
 ![Audio](https://img.shields.io/badge/audio-WebAudio%20synth-purple)
 ![License](https://img.shields.io/badge/license-MIT-blue)
-![Status](https://img.shields.io/badge/bounty%20result-3%20Dec%202026-orange)
+![Status](https://img.shields.io/badge/status-completed-brightgreen)
 
 ▶️ **[Play it live](https://kamalmosadegh.github.io/voidstorm/game/)** — no install, runs in your browser.
 
@@ -22,7 +22,7 @@ Survive escalating waves in a living neon arena:
 **WASD / arrows** move · **mouse** aim · **click / Space** fire
 
 ## 🛠️ Tech
-Vanilla JavaScript + Canvas 2D · deterministic seeded runs · fixed-timestep loop · 99.7% self-authored code · passed every Round-1 validity check of the make.fun "Best Game" bounty ($1,000 pool).
+Vanilla JavaScript + Canvas 2D · deterministic seeded runs · fixed-timestep loop · 99.7% self-authored code.
 
 ## 👤 Author
 **Kamal Mosadegh** — freelance developer · [Portfolio](https://kamalmosadegh.github.io) · kamalmosadegh6977@gmail.com
