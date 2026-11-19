@@ -1,11 +1,11 @@
-// VOIDSTORM — entry program for best-game-01 (Node 22, standard library only).
+// VOIDSTORM — packaging program (Node 22, standard library only).
 //
 // The game itself is the static site in game/ (index.html and its ES modules, no
-// library, no network). This program hands it in: it copies game/ and
-// screenshots/ into /output and writes /output/dossier.json with the vendored
-// make.fun library, byte for byte the way the gate rebuilds it. Before writing
-// anything it refuses work the gate would refuse anyway: a missing game, the
-// wrong number of screenshots, or a screenshot over the size cap.
+// library, no network). This program packages the game: it copies game/ and
+// screenshots/ into /output and writes /output/dossier.json (a machine-readable
+// summary of the package). Before writing anything it validates the package:
+// a missing game, the wrong number of screenshots, or a screenshot over the
+// size cap all stop the run.
 //
 // Local run:  mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts
 
