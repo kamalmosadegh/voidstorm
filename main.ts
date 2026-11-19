@@ -2,28 +2,26 @@
 //
 // The game itself is the static site in game/ (index.html and its ES modules, no
 // library, no network). This program packages the game: it copies game/ and
-// screenshots/ into /output and writes /output/dossier.json (a machine-readable
-// summary of the package). Before writing anything it validates the package:
-// a missing game, the wrong number of screenshots, or a screenshot over the
-// size cap all stop the run.
+// screenshots/ into /output and writes /output/summary.json — a deterministic
+// manifest of the package (path, size and SHA-256 of every file). Before
+// writing anything it validates the package: a missing game, the wrong
+// number of screenshots, or a screenshot over the size cap all stop the run.
 //
-// Local run:  mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts
+// Local run:  mkdir -p out && OUTPUT_DIR=out node main.ts
 
-import { cpSync, existsSync, mkdirSync, readdirSync, statSync, writeFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { buildDossier } from './vendor/makefun-game.ts';
 
 const here = fileURLToPath(new URL('.', import.meta.url));
-const out = process.env.MAKEFUN_OUTPUT_DIR ?? '/output';
+const out = process.env.OUTPUT_DIR ?? '/output';
 
-/** The gate's caps, mirrored so a bad hand-in fails here with a plain reason. */
+/** Package caps, checked here so a bad package fails with a plain reason. */
 const CAPS = {
-  text_max_bytes: 163_840,
   screenshots: { max: 4, max_bytes: 262_144 },
   game_max_files: 993,
   game_max_bytes: 50_331_648,
-  game_path_max_bytes: 1000,
 };
 
 function refuse(message: string): never {
@@ -49,6 +47,43 @@ for (const name of shots) {
 mkdirSync(out, { recursive: true });
 cpSync(join(here, 'game'), join(out, 'game'), { recursive: true });
 cpSync(shotsDir, join(out, 'screenshots'), { recursive: true });
-writeFileSync(join(out, 'dossier.json'), buildDossier(out, CAPS));
 
-process.stdout.write(`voidstorm: handed in game/ and ${shots.length} screenshots; dossier.json written to ${out}\n`);
+/** One file in the package manifest. */
+interface ManifestFile {
+  path: string;
+  bytes: number;
+  sha256: string;
+}
+
+/**
+ * Write summary.json into `dir`: a deterministic manifest (path, size,
+ * SHA-256) of every packaged file, after enforcing the package caps.
+ */
+function writeSummary(dir: string): void {
+  const files: ManifestFile[] = [];
+  const walk = (from: string, prefix: string): void => {
+    for (const name of readdirSync(from).sort()) {
+      if (prefix === '' && name === 'summary.json') continue;
+      const path = join(from, name);
+      if (statSync(path).isDirectory()) {
+        walk(path, `${prefix}${name}/`);
+        continue;
+      }
+      const data = readFileSync(path);
+      files.push({ path: `${prefix}${name}`, bytes: data.length, sha256: createHash('sha256').update(data).digest('hex') });
+    }
+  };
+  walk(dir, '');
+  if (files.length > CAPS.game_max_files + CAPS.screenshots.max) {
+    refuse(`the package holds ${files.length} files: the cap is ${CAPS.game_max_files + CAPS.screenshots.max}`);
+  }
+  const total = files.reduce((n, f) => n + f.bytes, 0);
+  if (total > CAPS.game_max_bytes) {
+    refuse(`the package is ${total} bytes: the cap is ${CAPS.game_max_bytes}`);
+  }
+  writeFileSync(join(dir, 'summary.json'), `${JSON.stringify({ schema: 'summary/v1', files }, null, 2)}\n`);
+}
+
+writeSummary(out);
+
+process.stdout.write(`voidstorm: packaged game/ and ${shots.length} screenshots; summary.json written to ${out}\n`);
