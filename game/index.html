@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VOIDSTORM — a neon arena survival shooter</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #04060f; min-height: 100%; }
+  body { display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: system-ui, sans-serif; padding: 18px 0; box-sizing: border-box; }
+  canvas { width: min(97vw, 1280px); height: auto; aspect-ratio: 1280 / 800; border-radius: 6px; box-shadow: 0 0 60px rgba(55, 244, 228, 0.16); background: #070b18; }
+  p { color: #5f7396; font-size: 13px; margin: 10px 0 0; }
+</style>
+</head>
+<body>
+<canvas id="game" width="1280" height="800"></canvas>
+<p>VOIDSTORM — an original game built for make.fun's best game bounty. WASD move · mouse aim · hold to fire · SHIFT dash.</p>
+<script type="module" src="src/main.js"></script>
+</body>
+</html>
