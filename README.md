@@ -1,14 +1,30 @@
-# VOIDSTORM
+# 🌌 VOIDSTORM — Neon Arena Survival Shooter
 
-A neon arena survival shooter in a single HTML page — built for the make.fun "Best Game" bounty ($1,000 pool, result 3 Dec 2026).
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)
+![Canvas](https://img.shields.io/badge/render-Canvas%202D-red)
+![Audio](https://img.shields.io/badge/audio-WebAudio%20synth-purple)
+![License](https://img.shields.io/badge/license-MIT-blue)
+![Status](https://img.shields.io/badge/bounty%20result-3%20Dec%202026-orange)
 
-## The game
-Survive escalating waves in a living arena: **5 enemy types + a boss**, combo scoring, a between-wave upgrade draft, and an endless mode after victory. All sound and music are synthesized live with WebAudio — zero audio assets.
+▶️ **[Play it live](https://kamalmosadegh.github.io/voidstorm/game/)** — no install, runs in your browser.
 
-## Play
-Open `game/index.html` in any modern browser. WASD/arrows to move, mouse to aim, click/Space to fire.
+![VOIDSTORM title](screenshots/1-title.jpg)
+![VOIDSTORM gameplay](screenshots/2-play.jpg)
 
-## Tech
-Vanilla JavaScript + Canvas 2D. Deterministic seeded runs, fixed-timestep loop. 99.7% self-authored code; passed every Round-1 validity check.
+## 🎮 The game
+Survive escalating waves in a living neon arena:
+- **5 enemy types + a boss**, each with its own behaviour
+- Combo scoring and a **between-wave upgrade draft**
+- Victory at wave 10 — then **endless mode**
+- **Zero audio assets:** every sound and the whole soundtrack are synthesized live with WebAudio
 
-*Built by Kamal Mosadegh (freelance developer) with an autonomous AI development workflow.*
+## 🕹️ Controls
+**WASD / arrows** move · **mouse** aim · **click / Space** fire
+
+## 🛠️ Tech
+Vanilla JavaScript + Canvas 2D · deterministic seeded runs · fixed-timestep loop · 99.7% self-authored code · passed every Round-1 validity check of the make.fun "Best Game" bounty ($1,000 pool).
+
+## 👤 Author
+**Kamal Mosadegh** — freelance developer · [Portfolio](https://kamalmosadegh.github.io) · kamalmosadegh6977@gmail.com
+
+MIT licensed.
